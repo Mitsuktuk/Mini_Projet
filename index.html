@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Restaurants</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div id="restaurants" class="container">
+    <div class="info">
+        <h1>Restaurants</h1>
+        <span>Par Antoine & Marie-Mitsuko</span><br/>
+        <input v-on:input="keyword()" id="input" class="field" type="text" placeholder="Nom">
+        <h2>{{name}}</h2>
+        <div id="loader">
+            <div class="loader"></div>
+        </div>
+        <div class="select">
+            <select name="slct" id="slct" v-model="pagesize" v-on:change="selectPageSize()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="pagination" class="pagination">
+        <a v-on:click="goPage(0)" class="page" v-if="page>1">first</a>
+        <span v-if="page>1">...</span>
+        <a v-on:click="goPage(page-1)" class="page" v-if="page>0">{{page}}</a>
+        <span class="page active">{{page + 1}}</span>
+        <a v-on:click="goPage(page+1)" class="page" v-if="page<(totalPages-1)">{{page + 2}}</a>
+        <span v-if="page<(totalPages-2)">...</span>
+        <a v-on:click="goPage(totalPages-1)" class="page"  v-if="page<(totalPages-2)">last</a>
+
+        <h3>Total restaurants: {{totalRestaurants}}</h3>
+
+    </div>
+
+
+    <div v-for="(restaurant, index) in restaurants">
+            <div class="column">
+                <div id="post-module" class="post-module">
+                    <div class="thumbnail">
+                        <!--<div class="date">
+                            <div class="day"></div>
+                            <div class="month"></div>
+                        </div>--><img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
+                    </div>
+                    <div class="post-content">
+                        <div class="category">{{restaurant.cuisine}}</div>
+                        <h1 class="title">{{restaurant.name}}</h1>
+                        <h2 class="sub_title">{{restaurant.borough}}</h2>
+                        <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
+                        <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
+                    </div>
+                </div>
+    </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./javascript.js" type="text/javascript"></script>
+
+</body>
+</html>
