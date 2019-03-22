@@ -53,7 +53,7 @@ var app = new Vue({
         },
 
         displayRestaurant : function() {
-
+            location.replace("restaurant.html")
         },
 
         getDataFromServer: function(cas, url) {
