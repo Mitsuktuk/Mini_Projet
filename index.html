@@ -41,24 +41,24 @@
 
 
     <div v-for="(restaurant, index) in restaurants">
-            <div class="column">
-                <div id="post-module" class="post-module">
-                    <div class="thumbnail">
-                        <!--<div class="date">
-                            <div class="day"></div>
-                            <div class="month"></div>
-                        </div>--><img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
-                    </div>
-                    <div class="post-content">
-                        <div class="category">{{restaurant.cuisine}}</div>
-                        <h1 class="title">{{restaurant.name}}</h1>
-                        <h2 class="sub_title">{{restaurant.borough}}</h2>
-                        <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
-                        <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
-                    </div>
+        <div class="column">
+            <a v-on:click="goPage(12)" id="post-module" class="post-module">
+                <div class="thumbnail">
+                    <!--<div class="date">
+                        <div class="day"></div>
+                        <div class="month"></div>
+                    </div>--><img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
                 </div>
+                <div class="post-content">
+                    <div class="category">{{restaurant.cuisine}}</div>
+                    <h1 class="title">{{restaurant.name}}</h1>
+                    <h2 class="sub_title">{{restaurant.borough}}</h2>
+                    <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
+                    <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

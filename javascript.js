@@ -28,6 +28,7 @@ var app = new Vue({
                 this.name = "";
             }
         },
+
         selectPageSize: function() {
             var inputVal = document.querySelector("#input").value;
             if (!inputVal == "") {
@@ -40,6 +41,7 @@ var app = new Vue({
                 this.getDataFromServer("restaurants", this.getRestaurants + '?pagesize=' + this.pagesize.toString() + '&page=' + this.page.toString());
             }
         },
+
         goPage: function(num) {
             this.page = num;
             var inputVal = document.querySelector("#input").value;
@@ -49,6 +51,11 @@ var app = new Vue({
                 this.getDataFromServer("restaurants", this.getRestaurants + '?pagesize=' + this.pagesize.toString() + '&page=' + this.page.toString());
             }
         },
+
+        displayRestaurant : function() {
+
+        },
+
         getDataFromServer: function(cas, url) {
             var loader = document.querySelector("#loader");
             loader.style.display = 'block';
@@ -77,6 +84,3 @@ var app = new Vue({
     }
 
 });
-
-
-

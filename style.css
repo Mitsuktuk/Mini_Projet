@@ -364,3 +364,7 @@ body {
 .container .info span .fa {
   color: #e74c3c;
 }
+
+#post-module {
+  cursor: pointer;
+}
