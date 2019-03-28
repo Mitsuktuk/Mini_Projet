@@ -13,9 +13,32 @@ const dbName = 'test';
 exports.connexionMongo = function(callback) {
 	MongoClient.connect(url, function(err, client) {
 		var db = client.db(dbName);
-		
+
 		assert.equal(null, err);
 		callback(err, db);
+	});
+}
+
+exports.findRestaurantByLocation = function(lat, lng, callback) {
+	MongoClient.connect(url, function(err, client) {
+		var db = client.db(dbName);
+		console.log("lat = " + lat);
+		console.log("lng = " + lng);
+
+		if(!err){
+				db.collection('restaurants')
+				.find({
+					'address.coord.0': { $gt: parseFloat(lat-0.1) },
+					$and: [{'address.coord.0': { $lt: parseFloat(lat+0.1) }}],
+					$and: [{'address.coord.1': { $gt: parseFloat(lng-0.1) }}],
+					$and: [{'address.coord.1': { $lt: parseFloat(lng+0.1) }}]
+				})
+				.toArray()
+				.then(arr => callback(arr));
+		}
+		else{
+				callback(-1);
+		}
 	});
 }
 
@@ -23,11 +46,11 @@ exports.countRestaurants = function(nom, callback) {
 	console.log("DANS COUNT")
 	MongoClient.connect(url, function(err, client) {
         var db = client.db(dbName);
-		
+
 		if(nom) {
 			let myquery = {
 				"name": {
-					$regex: ".*" + nom + ".*", 
+					$regex: ".*" + nom + ".*",
 					$options:"i"
 				}
 			}
@@ -41,7 +64,7 @@ exports.countRestaurants = function(nom, callback) {
 				console.log("COUNT = " + res)
 				callback(res);
 			});
-		}		
+		}
 	});
 };
 
@@ -49,7 +72,7 @@ exports.findRestaurants = function(page, pagesize, callback) {
     MongoClient.connect(url, function(err, client) {
     	    console.log("pagesize = " + pagesize);
 			console.log("page = " + page);
-			
+
 			var db = client.db(dbName);
 
 			console.log("db " + db)
@@ -75,7 +98,7 @@ exports.findRestaurantById = function(id, callback) {
 
             let myquery = { "_id": ObjectId(id)};
 
-            db.collection("restaurants") 
+            db.collection("restaurants")
             .findOne(myquery, function(err, data) {
             	let reponse;
 
@@ -118,21 +141,21 @@ exports.findRestaurantsByName = function(nom,page, pagesize, callback) {
 
     	// syntaxe recommandée
     	// Cf doc mongodb: https://docs.mongodb.com/manual/reference/operator/query/regex/
-    	// The $regex value needs to be either the string 
-    	// pattern to match or a regular expression object. 
-    	// When passing a string pattern, you don't include 
+    	// The $regex value needs to be either the string
+    	// pattern to match or a regular expression object.
+    	// When passing a string pattern, you don't include
     	// the / delimitters
     	// VERSION avec $regexp et $options
     	let myquery = {
     		"name": {
-    			$regex: ".*" + nom + ".*", 
+    			$regex: ".*" + nom + ".*",
     			$options:"i"
     		}
     	}
 
     	// VERSION avec objet RegExp
     	//let myquery =  {'name' : new RegExp('^.*'+nom+'.*$',"i")};
-    	// ou, si on veut être "case sensitive"  
+    	// ou, si on veut être "case sensitive"
     	//let myquery =  {'name' : new RegExp('^.*'+nom+'.*$')};
         if(!err){
             db.collection('restaurants')
@@ -153,9 +176,9 @@ exports.createRestaurant = function(formData, callback) {
 		var db = client.db(dbName);
 
 	    if(!err) {
-	 
+
 			let toInsert = {
-				name : formData.nom, 
+				name : formData.nom,
 				cuisine : formData.cuisine
 			};
 			console.dir(JSON.stringify(toInsert));
@@ -198,7 +221,7 @@ exports.updateRestaurant = function(id, formData, callback) {
 		if(!err) {
             let myquery = { "_id": ObjectId(id)};
 	        let newvalues = {
-	        	name : formData.nom, 
+	        	name : formData.nom,
 	        	cuisine : formData.cuisine
 	        };
 
@@ -238,7 +261,7 @@ exports.deleteRestaurant = function(id, callback) {
 
 		if(!err) {
             let myquery = { "_id": ObjectId(id)};
-	        
+
 			db.collection("restaurants")
 			.deleteOne(myquery, function(err, result) {
 	         	if(!err){

@@ -95,26 +95,26 @@ app.get('/api/connection', function(req, res) {
 // le prendre pour une TABLE ou une collection
 // cf la partie "reserved words" de
 // https://blog.octo.com/designer-une-api-rest/
-app.get('/api/restaurants/count', function(req, res) { 
+app.get('/api/restaurants/count', function(req, res) {
 	// on renvoie le nombre de restaurants
 	let nom = req.query.nom || "";
-	
+
  	mongoDBModule.countRestaurants(nom, function(data) {
  		var objdData = {
  			msg:"Count effectué avec succès",
  			data: data
  		}
- 		res.send(JSON.stringify(objdData)); 
- 	});     	
+ 		res.send(JSON.stringify(objdData));
+ 	});
 });
 
-// On va récupérer des restaurants par un GET (standard REST) 
+// On va récupérer des restaurants par un GET (standard REST)
 // cette fonction d'API peut accepter des paramètres
 // pagesize = nombre de restaurants par page
 // page = no de la page
 // Oui, on va faire de la pagination, pour afficher
 // par exemple les restaurants 10 par 10
-app.get('/api/restaurants', function(req, res) { 
+app.get('/api/restaurants', function(req, res) {
 	// Si présent on prend la valeur du param, sinon 1
     let page = parseInt(req.query.page || 1);
     // idem si present on prend la valeur, sinon 10
@@ -125,27 +125,36 @@ app.get('/api/restaurants', function(req, res) {
  			msg:"restaurant recherchés avec succès",
  			data: data
  		}
- 		res.send(JSON.stringify(objdData)); 
- 	}); 
-}); 
+ 		res.send(JSON.stringify(objdData));
+ 	});
+});
 
 // Récupération d'un seul restaurant par son id
 app.get('/api/restaurants/:id', function(req, res) {
 	var id = req.params.id;
 
  	mongoDBModule.findRestaurantById(id, function(data) {
- 		res.send(JSON.stringify(data)); 
+ 		res.send(JSON.stringify(data));
  	});
- 
 });
 
-// On va récupérer des restaurants par un GET (standard REST) 
+// Récupération des restaurants proches d'une localisation
+app.get('/api/restaurants/around/:lat/:lng', function(req, res) {
+	var lat = req.params.lat;
+  var lng = req.params.lng;
+
+ 	mongoDBModule.findRestaurantByLocation(lat, lng, function(data) {
+ 		res.send(JSON.stringify(data));
+ 	});
+});
+
+// On va récupérer des restaurants par un GET (standard REST)
 // cette fonction d'API peut accepter des paramètres
 // pagesize = nombre de restaurants par page
 // page = no de la page
 // Oui, on va faire de la pagination, pour afficher
 // par exemple les restaurants 10 par 10
-app.get('/api/restaurantsNom', function(req, res) { 
+app.get('/api/restaurantsNom', function(req, res) {
 	// Si présent on prend la valeur du param, sinon 1
     let page = parseInt(req.query.page || 0);
     // idem si present on prend la valeur, sinon 10
@@ -159,8 +168,8 @@ app.get('/api/restaurantsNom', function(req, res) {
 	 			msg:"restaurant recherchés par nom avec succès",
 	 			data: data
 	 		}
-	 		res.send(JSON.stringify(objdData)); 
-	 	}); 
+	 		res.send(JSON.stringify(objdData));
+	 	});
     } else {
     	// find normal
 	 	mongoDBModule.findRestaurants(page, pagesize, function(data) {
@@ -168,8 +177,8 @@ app.get('/api/restaurantsNom', function(req, res) {
 	 			msg:"restaurant recherchés avec succès",
 	 			data: data
 	 		}
-	 		res.send(JSON.stringify(objdData)); 
-	 	}); 
+	 		res.send(JSON.stringify(objdData));
+	 	});
 
     }
 });
@@ -177,14 +186,14 @@ app.get('/api/restaurantsNom', function(req, res) {
 // Creation d'un restaurant par envoi d'un formulaire
 // On fera l'insert par un POST, c'est le standard REST
 app.post('/api/restaurants', multerData.fields([]), function(req, res) {
-	// On supposera qu'on ajoutera un restaurant en 
-	// donnant son nom et sa cuisine. On va donc 
+	// On supposera qu'on ajoutera un restaurant en
+	// donnant son nom et sa cuisine. On va donc
 	// recuperer les données du formulaire d'envoi
 	// les params sont dans req.body même si le formulaire
 	// est envoyé en multipart
 
  	mongoDBModule.createRestaurant(req.body, function(data) {
- 		res.send(JSON.stringify(data)); 
+ 		res.send(JSON.stringify(data));
  	});
 });
 
@@ -194,7 +203,7 @@ app.put('/api/restaurants/:id', multerData.fields([]), function(req, res) {
 	var id = req.params.id;
 
  	mongoDBModule.updateRestaurant(id, req.body, function(data) {
- 		res.send(JSON.stringify(data)); 
+ 		res.send(JSON.stringify(data));
  	});
 });
 
@@ -205,7 +214,6 @@ app.delete('/api/restaurants/:id', function(req, res) {
 	var id = req.params.id;
 
  	mongoDBModule.deleteRestaurant(id, function(data) {
- 		res.send(JSON.stringify(data)); 
+ 		res.send(JSON.stringify(data));
  	});
 })
-
