@@ -1,11 +1,3 @@
-function initMap() {
-  var location = {lat: 43.438, lng: -1.592};
-  var map = new google.maps.Map(document.querySelector("#map"), {
-    zoom: 4,
-    center: location
-  })
-}
-
 var app = new Vue({
     el: '#restaurants',
     data: {
