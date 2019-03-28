@@ -1,6 +1,14 @@
 #map {
-  height: 100px;
+  height: 250px;
   width: 100%;
+}
+
+#header, .info {
+  margin-bottom: 15px !important;
+}
+
+#restaurants, .info {
+  margin-top: 10px !important;
 }
 
 select {
