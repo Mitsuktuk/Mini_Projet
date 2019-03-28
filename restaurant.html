@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Restaurants</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div id="header" class="container">
+      <div class="info">
+          <h1>Restaurants</h1>
+          <span>Par Antoine & Marie-Mitsuko</span><br/>
+      </div>
+  </div>
+
+<div id="restaurant" class="container">
+                  <div class="thumbnail">
+                    <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
+                  </div>
+                  <div class="post-content">
+                      <div class="category">{{restaurant_id}}</div>
+                      <h1 class="title">{{restaurant.name}}</h1>
+                      <h2 class="sub_title">{{restaurant.borough}}</h2>
+                      <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
+                      <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
+                  </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="./vueRestaurant.js" type="text/javascript"></script>
+
+</body>
+</html>
