@@ -1,4 +1,4 @@
-var map;
+var map, initMarker, restaurants;
 
 function initMap() {
   var location = {
@@ -11,7 +11,7 @@ function initMap() {
     center: location
   })
 
-  var initMarker = new google.maps.Marker({
+  initMarker = new google.maps.Marker({
     position: location,
     map: map,
     draggable:true,
@@ -20,6 +20,7 @@ function initMap() {
       url: "map_marker.png",
     }
   });
+  markerCoords(initMarker);
 
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
@@ -28,19 +29,37 @@ function initMap() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-
-      var marker = new google.maps.Marker({
-          position: pos,
-          map: map,
-          draggable:true,
-          animation: google.maps.Animation.DROP,
-          icon: {
-            url: "map_marker.png",
-          },
-          title:"Drag me!"
-      });
-
-      map.panTo(marker.getPosition());
+      initMarker.setPosition(pos);
+      map.panTo(initMarker.getPosition());
     });
   }
+
+  getRestaurants(initMarker.getPosition().lat(), initMarker.getPosition().lng());
+}
+
+function markerCoords(markerobject) {
+  google.maps.event.addListener(initMarker, 'dragend', function(evt){
+    var lat, lng;
+    var infoWindow = new google.maps.InfoWindow();
+    lat = evt.latLng.lat();
+    lng = evt.latLng.lng();
+  });
+}
+
+function addRestaurantsMarkers(restaurants) {
+  
+}
+
+function getRestaurants(lat, lng) {
+  console.log("--- GETTING DATA ---");
+  fetch("http://localhost:8080/api/restaurants/around/" + lat + "/" + lng)
+    .then(response => {
+      return response.json(); // transforme le json texte en objet js
+    })
+    .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
+      restaurants = data;
+      console.log(data);
+    }).catch(err => {
+    console.log("erreur dans le get : " + err)
+  });
 }
