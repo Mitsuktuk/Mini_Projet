@@ -65,10 +65,22 @@ function addRestaurantsMarkers() {
       lat: element.address.coord[1],
       lng: element.address.coord[0]
     };
+
+    var contentString = '<h2>' + element.name + '</h2>'+
+            '<p>' + element.cuisine + '</p>';
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
     var marker = new google.maps.Marker({
       position: pos,
       map: map,
     });
+    marker.addListener('click', function() {
+      infoWindow.open(map, marker);
+    });
+
     restaurantsMarkers.push(marker);
   });
 }
