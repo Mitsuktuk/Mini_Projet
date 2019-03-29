@@ -1,14 +1,19 @@
-import {id_restaurant} from './vue.js'
-var appli = new Vue({
+var app = new Vue({
     el: '#restaurant',
     data: {
         restaurant: null,
-        getRestaurants: 'http://localhost:8080/api/restaurants/5c63cdedc7e1817a87995a1e',
-        id_restaurant: app.id_restaurant,
+        getRestaurants: 'http://localhost:8080/api/restaurants',
+        idRestaurant:"",
     },
     mounted() {
-        this.getDataFromServer(this.getRestaurants);
-        console.log(id_restaurant);
+        this.getDataFromServer(this.getRestaurants + "/" + this.idRestaurant);
+    },
+    created: function(){
+        var urlFichier = document.URL;
+        var id_recup = urlFichier.substring(urlFichier.lastIndexOf("=")+1);
+        console.log(urlFichier);
+        console.log(id_recup)
+        this.idRestaurant = id_recup;
     },
     methods: {
         getDataFromServer: function(url) {
@@ -22,9 +27,6 @@ var appli = new Vue({
                 })
                 .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
                   this.restaurant = data.restaurant;
-                  /*loader.style.display = 'none';
-                  pagination.style.display = 'block';*/
-                  console.log(this.restaurant);
                 }).catch(err => {
                 console.log("erreur dans le get : " + err)
             });
