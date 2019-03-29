@@ -13,7 +13,6 @@ var app = new Vue({
 
         this.getDataFromServer("total", this.getRestaurants + '/count');
         this.getDataFromServer("restaurants", this.getRestaurants + '?pagesize=' + this.pagesize.toString() + '&page=' + this.page.toString());
-        //this.getDataFromServer("restaurants", this.getRestaurants + '/40361390' );
     },
     methods: {
         keyword: function() {
