@@ -67,7 +67,8 @@ function addRestaurantsMarkers() {
     };
 
     var contentString = '<h2>' + element.name + '</h2>'+
-            '<p>' + element.cuisine + '</p>';
+            '<p>' + element.cuisine + '</p>' +
+            '<a href="restaurant.html?id=' + element._id + '">Details</a>';
 
     var infoWindow = new google.maps.InfoWindow({
       content: contentString
