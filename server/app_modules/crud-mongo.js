@@ -24,14 +24,20 @@ exports.findRestaurantByLocation = function(lat, lng, callback) {
 		var db = client.db(dbName);
 		console.log("lat = " + lat);
 		console.log("lng = " + lng);
+		var latPlusFinal = parseFloat(lat)+parseFloat(0.01);
+		var latMoinsFinal = parseFloat(lat)-parseFloat(0.01);
+		var lngPlusFinal = parseFloat(lng)+parseFloat(0.01);
+		var lngMoinsFinal = parseFloat(lng)-parseFloat(0.01);
 
 		if(!err){
 				db.collection('restaurants')
 				.find({
-					'address.coord.0': { $gt: parseFloat(lng-0.001) },
-					$and: [{'address.coord.0': { $lt: parseFloat(lng+0.001) }}],
-					$and: [{'address.coord.1': { $gt: parseFloat(lat-0.001) }}],
-					$and: [{'address.coord.1': { $lt: parseFloat(lat+0.001) }}]
+					$and: [
+						{'address.coord.0': { $gt: parseFloat(lngMoinsFinal) }},
+						{'address.coord.0': { $lt: parseFloat(lngPlusFinal) }},
+						{'address.coord.1': { $gt: parseFloat(latMoinsFinal) }},
+						{'address.coord.1': { $lt: parseFloat(latPlusFinal) }}
+					]
 				})
 				.toArray()
 				.then(arr => callback(arr));
@@ -70,7 +76,7 @@ exports.countRestaurants = function(nom, callback) {
 
 exports.findRestaurants = function(page, pagesize, callback) {
     MongoClient.connect(url, function(err, client) {
-    	    console.log("pagesize = " + pagesize);
+    	console.log("pagesize = " + pagesize);
 			console.log("page = " + page);
 
 			var db = client.db(dbName);
@@ -79,15 +85,15 @@ exports.findRestaurants = function(page, pagesize, callback) {
         if(!err){
 			db.collection('restaurants')
 			.find()
-            .skip(page*pagesize)
-            .limit(pagesize)
-            .toArray()
-            .then(arr => callback(arr));
-        }
-        else{
-            callback(-1);
-        }
-    });
+      .skip(page*pagesize)
+      .limit(pagesize)
+      .toArray()
+      .then(arr => callback(arr));
+	  }
+	  else{
+	      callback(-1);
+	  }
+  });
 };
 
 exports.findRestaurantById = function(id, callback) {
@@ -134,10 +140,10 @@ exports.findRestaurantById = function(id, callback) {
 
 exports.findRestaurantsByName = function(nom,page, pagesize, callback) {
     MongoClient.connect(url, function(err, client) {
-            var db = client.db(dbName);
-    	    console.log("pagesize = " + pagesize);
-    	    console.log("page = " + page);
-    console.log("FIND BY NAME nom=" + nom);
+      var db = client.db(dbName);
+      console.log("pagesize = " + pagesize);
+      console.log("page = " + page);
+    	console.log("FIND BY NAME nom=" + nom);
 
     	// syntaxe recommandée
     	// Cf doc mongodb: https://docs.mongodb.com/manual/reference/operator/query/regex/
