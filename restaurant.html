@@ -16,19 +16,17 @@
   </div>
 
 <div id="restaurant" class="container">
-                <div v-for="resto in restaurant">
-                  <div class="thumbnail">
-                    <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
-                  </div>
-                  <div class="post-content">
-                    <div class="category">{{restaurant_id}}</div>
-                    <h1 class="title">{{restaurant.name}}</h1>
-                    <h2 class="sub_title">{{restaurant.borough}}</h2>
-                    <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
-                    <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
-                  </div>
-                </div>
-</div>
+    <div class="thumbnail">
+      <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
+    </div>
+    <div class="post-content">
+        <div class="category">{{restaurant._id}}</div>
+        <h1 class="title">{{restaurant.name}}</h1>
+        <h2 class="sub_title">{{restaurant.borough}}</h2>
+        <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
+        <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
+    </div>
+  </div>
 
 </body>
 <body>

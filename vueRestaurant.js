@@ -1,5 +1,5 @@
 var app = new Vue({
-    el: '#infos',
+    el: '#restaurant',
     data: {
         restaurant: null,
         getRestaurants: 'http://localhost:8080/api/restaurants/5c63cd58d17b648636e663cc',
