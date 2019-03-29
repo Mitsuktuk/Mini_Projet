@@ -7,10 +7,10 @@ var app = new Vue({
         page: 0,
         pagesize: 10,
         name: "",
+        id_restaurant:"",
         getRestaurants: 'http://localhost:8080/api/restaurants',
     },
     mounted() {
-
         this.getDataFromServer("total", this.getRestaurants + '/count');
         this.getDataFromServer("restaurants", this.getRestaurants + '?pagesize=' + this.pagesize.toString() + '&page=' + this.page.toString());
     },
@@ -53,8 +53,11 @@ var app = new Vue({
             }
         },
 
-        displayRestaurant : function() {
-            location.replace("restaurant.html");
+        displayRestaurant : function(id_restaurant) {
+            //location.replace("restaurant.html");
+
+            this.id_restaurant = id_restaurant;
+            console.log(this.id_restaurant);
         },
 
         getDataFromServer: function(cas, url) {

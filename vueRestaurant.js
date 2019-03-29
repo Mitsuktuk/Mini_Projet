@@ -1,11 +1,13 @@
-var app = new Vue({
+var appli = new Vue({
     el: '#restaurant',
     data: {
         restaurant: null,
         getRestaurants: 'http://localhost:8080/api/restaurants/5c63cdedc7e1817a87995a1e',
+        id_restaurant: app.id_restaurant,
     },
     mounted() {
-        this.getDataFromServer(this.getRestaurants);
+        this.getDataFromServer(this.getRestaurants + '/' + this.id_restaurant);
+        console.log(id_restaurant);
     },
     methods: {
         getDataFromServer: function(url) {

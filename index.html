@@ -51,7 +51,7 @@
 
     <div v-for="(restaurant, index) in restaurants">
           <div class="column">
-              <a v-on:click="displayRestaurant()" id="post-module" class="post-module">
+              <a v-on:click="displayRestaurant(restaurant._id)" id="post-module" class="post-module">
                   <div class="thumbnail">
                       <!--<div class="date">
                           <div class="day"></div>
