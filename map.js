@@ -1,4 +1,5 @@
 var map, initMarker, restaurants;
+var restaurantsMarkers = [];
 
 function initMap() {
   var location = {
@@ -32,16 +33,14 @@ function initMap() {
       };
       initMarker.setPosition(pos);
       map.panTo(initMarker.getPosition());
+      getRestaurants(position.coords.latitude, position.coords.longitude);
     });
   }
 }
 
 function markerCoords(markerobject) {
   google.maps.event.addListener(initMarker, 'dragend', function(evt){
-    var lat, lng;
-    var infoWindow = new google.maps.InfoWindow();
-    lat = evt.latLng.lat();
-    lng = evt.latLng.lng();
+    getRestaurants(evt.latLng.lat(), evt.latLng.lng());
   });
 }
 
@@ -53,17 +52,30 @@ function getRestaurants(lat, lng) {
     })
     .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
       restaurants = data;
-      data.forEach(function(element) {
-        var pos = {
-          lat: element.address.coord[1],
-          lng: element.address.coord[0]
-        };
-        new google.maps.Marker({
-          position: pos,
-          map: map,
-        });
-      });
+      removeRestaurantsMarkers();
+      addRestaurantsMarkers();
     }).catch(err => {
-    console.log("erreur dans le get : " + err)
+      console.log("erreur dans le get : " + err)
+    });
+}
+
+function addRestaurantsMarkers() {
+  restaurants.forEach(function(element) {
+    var pos = {
+      lat: element.address.coord[1],
+      lng: element.address.coord[0]
+    };
+    var marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+    });
+    restaurantsMarkers.push(marker);
   });
+}
+
+function removeRestaurantsMarkers() {
+  restaurantsMarkers.forEach(function(element) {
+    element.setMap(null);
+  });
+  restaurantsMarkers = [];
 }
