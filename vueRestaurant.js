@@ -2,7 +2,7 @@ var app = new Vue({
     el: '#restaurant',
     data: {
         restaurant: null,
-        getRestaurants: 'http://localhost:8080/api/restaurants/5c63cd58d17b648636e663cc',
+        getRestaurants: 'http://localhost:8080/api/restaurants/5c63cdedc7e1817a87995a1e',
     },
     mounted() {
         this.getDataFromServer(this.getRestaurants);
