@@ -28,10 +28,10 @@ exports.findRestaurantByLocation = function(lat, lng, callback) {
 		if(!err){
 				db.collection('restaurants')
 				.find({
-					'address.coord.0': { $gt: parseFloat(lng-0.1) },
-					$and: [{'address.coord.0': { $lt: parseFloat(lng+0.1) }}],
-					$and: [{'address.coord.1': { $gt: parseFloat(lat-0.1) }}],
-					$and: [{'address.coord.1': { $lt: parseFloat(lat+0.1) }}]
+					'address.coord.0': { $gt: parseFloat(lng-0.001) },
+					$and: [{'address.coord.0': { $lt: parseFloat(lng+0.001) }}],
+					$and: [{'address.coord.1': { $gt: parseFloat(lat-0.001) }}],
+					$and: [{'address.coord.1': { $lt: parseFloat(lat+0.001) }}]
 				})
 				.toArray()
 				.then(arr => callback(arr));
