@@ -1,3 +1,4 @@
+import {id_restaurant} from './vue.js'
 var appli = new Vue({
     el: '#restaurant',
     data: {
@@ -6,7 +7,7 @@ var appli = new Vue({
         id_restaurant: app.id_restaurant,
     },
     mounted() {
-        this.getDataFromServer(this.getRestaurants + '/' + this.id_restaurant);
+        this.getDataFromServer(this.getRestaurants);
         console.log(id_restaurant);
     },
     methods: {
