@@ -1,12 +1,25 @@
-var map, infoWindow;
+var map;
 
 function initMap() {
-  var location = {lat: 43.438, lng: -1.592};
+  var location = {
+    lat: 40.7,
+    lng: -73.9
+  };
+
   map = new google.maps.Map(document.querySelector("#map"), {
-    zoom: 6,
+    zoom: 16,
     center: location
   })
-  infoWindow = new google.maps.InfoWindow;
+
+  var initMarker = new google.maps.Marker({
+    position: location,
+    map: map,
+    draggable:true,
+    animation: google.maps.Animation.DROP,
+    icon: {
+      url: "map_marker.png",
+    }
+  });
 
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
@@ -16,23 +29,18 @@ function initMap() {
         lng: position.coords.longitude
       };
 
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Localisation trouvée.');
-      infoWindow.open(map);
-      map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
-}
+      var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          draggable:true,
+          animation: google.maps.Animation.DROP,
+          icon: {
+            url: "map_marker.png",
+          },
+          title:"Drag me!"
+      });
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-                            'Error: Le service de géolocalisation a échoué.' :
-                            'Error: Votre navigateur ne supporte pas la géolocalisation.');
-      infoWindow.open(map);
+      map.panTo(marker.getPosition());
+    });
+  }
 }
