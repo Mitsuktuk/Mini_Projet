@@ -4,6 +4,7 @@ var app = new Vue({
         restaurant: null,
         getRestaurants: 'http://localhost:8080/api/restaurants',
         idRestaurant:"",
+        grade:'',
     },
     mounted() {
         this.getDataFromServer(this.getRestaurants + "/" + this.idRestaurant);
@@ -16,6 +17,21 @@ var app = new Vue({
         this.idRestaurant = id_recup;
     },
     methods: {
+        moyGrade: function() {
+          var total = 0;
+          this.restaurant.grades.forEach(function(element) {
+            total = total + element.score;
+          });
+          var moy = total / this.restaurant.grades.length;
+          if (moy < 14) {
+            this.grade = 'A';
+          } else if (moy < 28) {
+            this.grade = 'B';
+          } else {
+            this.grade = 'C';
+          }
+        },
+
         getDataFromServer: function(url) {
             //var loader = document.querySelector("#loader");
             //loader.style.display = 'block';
@@ -27,6 +43,7 @@ var app = new Vue({
                 })
                 .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
                   this.restaurant = data.restaurant;
+                  this.moyGrade();
                 }).catch(err => {
                 console.log("erreur dans le get : " + err)
             });

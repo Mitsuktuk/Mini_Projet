@@ -2,8 +2,10 @@ var app = new Vue({
     el: '#restaurants',
     data: {
         restaurants: [],
+        restau: null,
         totalRestaurants: 0,
         totalPages: 1,
+        grade: '',
         page: 0,
         pagesize: 10,
         name: "",
@@ -52,8 +54,24 @@ var app = new Vue({
             }
         },
 
-        displayRestaurant : function(id_restaurant) {
+        displayRestaurant: function(id_restaurant) {
             location.replace("restaurant.html" + "?id=" + id_restaurant);
+        },
+
+        moyGrade: function(id_restaurant) {
+          this.getDataFromServer("restaurant", this.getRestaurants + '/' + id_restaurant);
+          var total = 0;
+          this.restau.grades.forEach(function(element) {
+            total = total + element.score;
+          });
+          var moy = total / this.restau.grades.length;
+          if (moy < 14) {
+            this.grade = 'A';
+          } else if (moy < 28) {
+            this.grade = 'B';
+          } else {
+            this.grade = 'C';
+          }
         },
 
         getDataFromServer: function(cas, url) {
@@ -70,6 +88,8 @@ var app = new Vue({
                         case "restaurants":
                             this.restaurants = data.data;
                             break;
+                        case "restaurant":
+                            this.restau = data.restaurant;
                         case "total":
                             this.totalRestaurants = data.data;
                             this.totalPages = Math.ceil(this.totalRestaurants / this.pagesize);
