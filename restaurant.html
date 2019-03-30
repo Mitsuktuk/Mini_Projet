@@ -16,6 +16,10 @@
   </div>
 
 <div id="restaurant" class="container">
+    <img v-bind:src="'https://maps.googleapis.com/maps/api/staticmap' +
+              '?center=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
+              '&zoom=15&size=300x300&markers=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
+              '&key=AIzaSyBdVLRCBDvrNu9JG7O775o3Xk_22QSXsZI'" />
     <div class="thumbnail">
       <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
     </div>
