@@ -1,14 +1,57 @@
-html, body {
-  background: #F7F5E6;
+#header, .info {
+  margin-bottom: 15px !important;
+}
+
+body {
+  background: #f2f2f2;
+  font-family: 'proxima-nova-soft', sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.title {
+  max-width: 800px;
+  min-width: 640px;
+  margin: 0 auto;
+  text-align : center;
+}
+
+.thumbnail{
+  position:absolute;
+  width:100px;
+  padding:30px;
+}
+
+.post-content{
+  position: absolute;
+  bottom: 0;
+  background: #f2f2f2;
+  width: 100%;
+  padding: 30px;
+  -webkti-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+  -moz-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+  -ms-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+  -o-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+  transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SLIDER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~é*/
+.slider{
+  margin-top:50px;
   height: 100%;
-  margin: 0;
+  align-items: center;
   padding: 0;
   width: 100%;
+  max-width: 720px;
 }
 
 .slider {
   margin: 0 auto;
-  max-width: 940px;
+
 }
 
 .slide_viewer {

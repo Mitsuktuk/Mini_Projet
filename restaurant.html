@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Restaurants</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" type="text/css" href="slider.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
+    <link rel="stylesheet" type="text/css" href="restaurant.css" />
 </head>
 
 <body>
-  <div id="header" class="container">
+  <div id="header" class="title" >
       <div class="info">
           <h1>Restaurants</h1>
           <span>Par Antoine & Marie-Mitsuko</span><br/>
@@ -17,10 +17,10 @@
   </div>
 
 <div id="restaurant" class="container">
-    <img v-bind:src="'https://maps.googleapis.com/maps/api/staticmap' +
+    <!-- <img v-bind:src="'https://maps.googleapis.com/maps/api/staticmap' +
               '?center=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
               '&zoom=15&size=300x300&markers=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
-              '&key=AIzaSyBdVLRCBDvrNu9JG7O775o3Xk_22QSXsZI'" />
+              '&key=AIzaSyBdVLRCBDvrNu9JG7O775o3Xk_22QSXsZI'" /> -->
     <div class="thumbnail">
       <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
     </div>
@@ -31,6 +31,7 @@
         <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
     </div>
   </div>
+</body>
 
 <div class="slider">
     <div class="slide_viewer">
@@ -45,7 +46,7 @@
         </div>
       </div>
     </div>
-</div><!-- End // .slider -->
+
 
   <div class="slide_buttons">
   </div>
@@ -73,7 +74,8 @@
       </svg>
     </div>
   </div><!-- End // .directional_nav -->
-</body>
+</div><!-- End // .slider -->
+
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
