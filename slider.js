@@ -1,3 +1,9 @@
+var backButton = document.querySelector("#back_button");
+backButton.onclick = function() {
+  location.replace("index.html");
+};
+
+
 $('.slider').each(function() {
   var $this = $(this);
   var $group = $this.find('.slide_group');

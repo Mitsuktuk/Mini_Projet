@@ -68,11 +68,7 @@ var app = new Vue({
           } else if (moy < 28) {
             grade = 'B';
           }
-          if (restaurant.grades[restaurant.grades.length - 1].moyGrade == null) {
-            restaurant.grades.push({ moyGrade: grade });
-          } else if (restaurant.grades[restaurant.grades.length - 1].moyGrade != grade) {
-            restaurant.grades[restaurant.grades.length - 1].moyGrade = grade;
-          }
+          restaurant.grades.push({ moyGrade: grade });
         },
 
         getDataFromServer: function(cas, url) {
