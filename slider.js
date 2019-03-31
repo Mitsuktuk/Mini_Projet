@@ -3,6 +3,12 @@ backButton.onclick = function() {
   location.replace("index.html");
 };
 
+var gradeButton = document.querySelector("#grade_button");
+gradeButton.onclick = function() {
+  var value = document.querySelector('input[name="input_grade"]:checked').value;
+  app.addGrade(value);
+};
+
 
 $('.slider').each(function() {
   var $this = $(this);

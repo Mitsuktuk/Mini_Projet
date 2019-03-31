@@ -27,16 +27,19 @@
         <h2 class="sub_title">{{restaurant.borough}}</h2>
         <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
         <h3 class="sub_title">Grade - {{ grade }}</h3>
-        <div>
-          <input type="radio" id="A" name="drone" value="A" checked>
-          <label for="A">A</label>
-          <input type="radio" id="B" name="drone" value="B">
-          <label for="B">B</label>
-          <input type="radio" id="C" name="drone" value="C">
-          <label for="C">C</label>
-        </div>
-        <button id="grade_button">Vote</button>
     </div>
+  </div>
+
+  <div class="post-content">
+    <div>
+      <input type="radio" id="A" name="input_grade" value="A" checked>
+      <label for="A">A</label>
+      <input type="radio" id="B" name="input_grade" value="B">
+      <label for="B">B</label>
+      <input type="radio" id="C" name="input_grade" value="C">
+      <label for="C">C</label>
+    </div>
+    <button id="grade_button">Vote</button>
   </div>
 </body>
 
