@@ -52,7 +52,7 @@
               <a v-on:click="displayRestaurant(restaurant._id)" id="post-module" class="post-module">
                   <div class="thumbnail">
                       <div class="date">
-                          <div class="day">{{ grade }}</div>
+                          <div class="day">{{ restaurant.grades[restaurant.grades.length - 1].moyGrade }}</div>
                           <div class="month">grade</div>
                       </div><img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
                   </div>

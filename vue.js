@@ -2,10 +2,8 @@ var app = new Vue({
     el: '#restaurants',
     data: {
         restaurants: [],
-        restau: null,
         totalRestaurants: 0,
         totalPages: 1,
-        grade: '',
         page: 0,
         pagesize: 10,
         name: "",
@@ -58,20 +56,19 @@ var app = new Vue({
             location.replace("restaurant.html" + "?id=" + id_restaurant);
         },
 
-        moyGrade: function(id_restaurant) {
-          this.getDataFromServer("restaurant", this.getRestaurants + '/' + id_restaurant);
+        moyGrade: function(restaurant) {
+          var grade = 'C';
           var total = 0;
-          this.restau.grades.forEach(function(element) {
+          restaurant.grades.forEach(function(element) {
             total = total + element.score;
           });
-          var moy = total / this.restau.grades.length;
+          var moy = total / restaurant.grades.length;
           if (moy < 14) {
-            this.grade = 'A';
+            grade = 'A';
           } else if (moy < 28) {
-            this.grade = 'B';
-          } else {
-            this.grade = 'C';
+            grade = 'B';
           }
+          restaurant.grades.push({ moyGrade: grade });
         },
 
         getDataFromServer: function(cas, url) {
@@ -80,26 +77,28 @@ var app = new Vue({
 
             console.log("--- GETTING DATA ---");
             fetch(url)
-                .then(response => {
-                    return response.json(); // transforme le json texte en objet js
-                })
-                .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
-                    switch (cas) {
-                        case "restaurants":
-                            this.restaurants = data.data;
-                            break;
-                        case "restaurant":
-                            this.restau = data.restaurant;
-                        case "total":
-                            this.totalRestaurants = data.data;
-                            this.totalPages = Math.ceil(this.totalRestaurants / this.pagesize);
-                            break;
-                    }
-                    loader.style.display = 'none';
-                    pagination.style.display = 'block';
-                }).catch(err => {
+              .then(response => {
+                  return response.json(); // transforme le json texte en objet js
+              })
+              .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
+                  switch (cas) {
+                      case "restaurants":
+                          data.data.forEach(function(element) {
+                            app.moyGrade(element);
+                          });
+                          this.restaurants = data.data;
+                          break;
+                      case "total":
+                          this.totalRestaurants = data.data;
+                          this.totalPages = Math.ceil(this.totalRestaurants / this.pagesize);
+                          break;
+                  }
+                  loader.style.display = 'none';
+                  pagination.style.display = 'block';
+              })
+              .catch(err => {
                 console.log("erreur dans le get : " + err)
-            });
+              });
         }
     }
 
