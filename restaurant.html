@@ -13,26 +13,25 @@
     <span class="Icon IconOpen IconClosed" />
   </button>
 
-  <div id="header" class="title" >
+  <!-- <div id="header" class="titre" >
       <div class="info">
           <h1>Restaurants</h1>
           <span>Par Antoine & Marie-Mitsuko</span><br/>
       </div>
-  </div>
+  </div> -->
 
 <div id="restaurant" class="container">
     <!-- <img v-bind:src="'https://maps.googleapis.com/maps/api/staticmap' +
               '?center=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
               '&zoom=15&size=300x300&markers=' + restaurant.address.coord[1] + ',' + restaurant.address.coord[0] +
               '&key=AIzaSyBdVLRCBDvrNu9JG7O775o3Xk_22QSXsZI'" /> -->
-    <div class="thumbnail">
+    <!-- <div class="thumbnail">
       <img v-bind:src="'https://picsum.photos/300/200?id='+restaurant.restaurant_id" />
-    </div>
+    </div> -->
     <div class="post-content">
         <h1 class="title">{{restaurant.name}}</h1>
         <h2 class="sub_title">Grade - {{ grade }}</h2>
         <h2 class="sub_title">{{restaurant.borough}}</h2>
-        <p class="description">{{restaurant.address.building}} {{restaurant.address.street}}</p>
         <div class="post-meta"><span class="timestamp">{{restaurant.address.building}} - {{restaurant.address.street}} - {{restaurant.address.zipcode}}</span></div>
     </div>
   </div>
