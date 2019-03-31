@@ -18,7 +18,7 @@ function initMap() {
     draggable:true,
     animation: google.maps.Animation.DROP,
     icon: {
-      url: "map_marker.png",
+      url: "assets/map_marker.png",
     }
   });
   markerCoords(initMarker);
@@ -45,18 +45,36 @@ function markerCoords(markerobject) {
 }
 
 function getRestaurants(lat, lng) {
-  console.log("--- GETTING DATA ---");
+  console.log("--- GETTING DATA MAP ---");
   fetch("http://localhost:8080/api/restaurants/around/" + lat + "/" + lng)
     .then(response => {
       return response.json(); // transforme le json texte en objet js
     })
     .then(data => { // data c'est l'objet ci-dessus (json devenu obj)
+      data.forEach(function(element) {
+        moyGrade(element);
+      });
       restaurants = data;
       removeRestaurantsMarkers();
       addRestaurantsMarkers();
     }).catch(err => {
       console.log("erreur dans le get : " + err)
     });
+}
+
+function moyGrade(restaurant) {
+  var grade = 'C';
+  var total = 0;
+  restaurant.grades.forEach(function(element) {
+    total = total + element.score;
+  });
+  var moy = total / restaurant.grades.length;
+  if (moy < 14) {
+    grade = 'A';
+  } else if (moy < 28) {
+    grade = 'B';
+  }
+  restaurant.grades.push(grade);
 }
 
 function addRestaurantsMarkers() {
@@ -67,7 +85,7 @@ function addRestaurantsMarkers() {
     };
 
     var contentString = '<h2>' + element.name + '</h2>'+
-            '<p>' + element.cuisine + '</p>' +
+            '<p>' + element.cuisine + ' - grade: ' + element.grades[element.grades.length - 1] + '</p>' +
             '<a href="restaurant.html?id=' + element._id + '">Details</a>';
 
     var infoWindow = new google.maps.InfoWindow({
